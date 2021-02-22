@@ -1,0 +1,90 @@
+body {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    font-family: 'din';
+    font-weight: 100;
+}
+
+body a {
+    color: #c4c900; 
+}
+body a:focus,
+body a:hover {
+    color: #333333; 
+}
+
+.mb {
+margin-bottom: 50px;}
+
+.din {font-family: din;}
+
+.eraser {font-family: eraserregular;}
+
+a {
+    color: yellow;
+    background-color: black;
+    text-decoration: none;
+}
+
+a:hover, body a:hover {
+    color: yellow;
+}
+
+.header a, .subheader a, .subsubheader a, .delete a {
+    background-color:transparent;
+}
+.header a:hover, .subheader a:hover, .subsubheader a:hover {
+    color: black;
+}
+table {
+    width: 100%;
+}
+
+th {
+    text-align: left;
+    width:1%;
+    white-space:nowrap;
+}
+
+input[type=text], input[type=password], textarea {
+    width: 100%;
+    border: 1px solid #dadada;
+    
+}
+
+tr:nth-child(odd) {
+    background: #eee;
+}
+
+input[readonly] {
+    background-color: #eee;
+    border: 1px solid darkgray;
+}
+
+button {
+    border: none;
+}
+
+.users.form input {
+       font-size: 30px;
+    padding: 5px;
+}
+
+.users.form .input.password {
+    padding-top: 30px;
+    
+}
+
+.users.form button {
+    margin-top: 30px;
+    min-height: 50px;
+    min-width: 200px;
+    font-size: 27px;
+    background-color: #000;
+    color: #f3ed3d;
+}
+
+.yellowdesksyellow {
+    color: #f3ed3d;
+}

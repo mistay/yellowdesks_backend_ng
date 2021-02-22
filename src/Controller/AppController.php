@@ -26,7 +26,7 @@ use Cake\Controller\Controller;
  *
  * @link https://book.cakephp.org/4/en/controllers.html#the-app-controller
  */
-class AppController extends Controller
+class AppController extends CrumbsController
 {
     /**
      * Initialization hook method.
@@ -50,4 +50,16 @@ class AppController extends Controller
          */
         //$this->loadComponent('FormProtection');
     }
+
+    public function cleanupbookings() {
+        // delete all reserverations that are 15 days old
+        // zu heiß. es können jetzt auch die hosts bis zu tage später buchungen akzeptieren
+        return;
+
+        // todo: ueberlegen wie wir cleanup loesen koennen
+        $model = TableRegistry::get('Bookings');
+        $time = date("Y-m-d H:i:s",  $this->timegmt() - (15 * 60));
+        $query = $model->deleteAll(["dt_inserted < " => $time]);
+    }
+    
 }

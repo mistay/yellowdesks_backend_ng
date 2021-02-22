@@ -1,72 +1,181 @@
-/* Home page styles */
-@font-face {
-    font-family: 'cakefont';
-    src: url('../font/cakedingbats-webfont.eot');
-    src: url('../font/cakedingbats-webfont.eot?#iefix') format('embedded-opentype'),
-    url('../font/cakedingbats-webfont.woff2') format('woff2'),
-    url('../font/cakedingbats-webfont.woff') format('woff'),
-    url('../font/cakedingbats-webfont.ttf') format('truetype'),
-    url('../font/cakedingbats-webfont.svg#cake_dingbatsregular') format('svg');
-    font-weight: normal;
-    font-style: normal;
+html {
+    height: 100%;
+    width: 100%;
 }
 body {
-    padding: 60px 0;
-}
-header {
-    margin-bottom: 60px;
-}
-img {
-    margin-bottom: 30px;
-}
-h1 {
-    font-weight: bold;
-}
-ul {
-    list-style-type: none;
-    margin: 0 0 30px 0;
-    padding-left: 25px;
-}
-a {
-    color: #0071BC;
-    text-decoration: underline;
-}
-hr {
-    border-bottom: 1px solid #e7e7e7;
-    border-top: 0;
-    margin-bottom: 35px;
+    /* background: url("img/eva.jpg") no-repeat center center fixed;
+    background-size: cover; */
+    padding: 0px;
+    margin: 0px;
+    bottom: 0px;
+    font-family: din;
+    height: 100%;
+    width: 100%;
 }
 
-.text-center {
+.footer {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
     text-align: center;
+    color: white;
+    z-index: 100;
 }
-.links a {
-    margin-right: 10px;
+
+.footer a {
+    color: black;
+    text-decoration: none;
 }
-.release-name {
-    color: #D33C43;
-    font-weight: 400;
-    font-style: italic;
+
+.coworkingsalzburg {
 }
-.bullet:before {
-    font-family: 'cakefont', sans-serif;
-    font-size: 18px;
+
+.yellowdesks {
+    background-color: #f3ed3d;
+    font-size: 55px;
+    margin-left: 50px;
+    font-family: eraserregular;
+    display: block;
+    margin-bottom: 12px;
+    padding: 6px;
+}
+.yellowlinks { 
+display: block;
+    margin-bottom: 6px;
+}
+.yellowlinks span {
+padding: 6px;
     display: inline-block;
-    margin-left: -1.3em;
-    width: 1.2em;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    vertical-align: -1px;
 }
-.success:before {
-    color: #88c671;
-    content: "\0056";
+
+@media (max-width: 500px) {
+    .yellowdesks {
+        font-size: 20px;
+        margin-left: 5px;
+    }
 }
-.problem:before {
-    color: #d33d44;
-    content: "\0057";
+
+.findandrent {
+    font-size: 20px;
+    background-color: #f3ed3d;
+    margin-left: 50px;
 }
-.cake-error {
-    padding: 10px;
-    margin: 10px 0;
+@media (max-width: 500px) {
+    .findandrent {
+        font-size: 15px;
+        margin-left: 5px;
+    }
+}
+
+.content {
+    /*  padding-top: 25%;
+    z-index: 100;
+    position: absolute;*/
+    z-index: 100;
+    position: absolute;
+    bottom: 40px;
+    left: 0px;
+    
+}
+
+.menu {
+    padding-top: 1px;
+    padding-right: 2px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    position: absolute;
+    right: 0;
+        
+    
+    z-index: 100;
+}
+
+.mobilemenu > .menu-mobile > .menu  {
+    display: block;
+    padding-top: 50px;
+    width: 50%;
+    padding-right: 10px;
+}
+
+@media (max-width: 600px) {
+    .menu {
+        justify-content: flex-start;
+        width: 50%;
+        text-align: left;
+    }
+}
+@media (max-device-width: 600px) {
+    .menu {
+        font-size: 10px;
+        width: 100%;
+        padding-right: 0px;
+    }
+    .menu a {
+        flex-grow: 1;
+    }
+}
+
+.menu a {
+    background-color: white;
+    min-width: 140px;
+    display: inline-block;
+    margin: 5px;
+    padding: 5px;
+    padding-left: 20px;
+    text-decoration: none;
+    color: black;
+}
+
+#map {
+    height: 100%;
+    width: 100%;
+}
+
+.menu a.facebooklogo, .menu a.androidlogo, .menu a.questionmark {
+    min-width: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.androidlogo img, .facebooklogo img, .questionmark img {
+    height: 20px;
+}
+
+#pac-input {
+    font-size: 19px;
+    z-index: 10000;
+    margin-top: 9px;
+    width: 150px;
+}
+
+#pac-input:focus {
+    width: 220px;
+}
+
+.burger .androidlogo img {
+    z-index: 10000;
+    top: 8px;
+    right: 55px;
+    width: 36px;
+    height: 38px;
+    padding: 7px;
+}
+
+.burger img {
+    right: 10px;
+    top: 10px;
+    width: 40px;
+    position: absolute;
+    z-index: 10000;
+    background: white;
+    padding: 7px;
+}
+
+.mobilemenu a {
+    margin: 0px;
+}
+
+.menu a {
+    display: block;
+    border: 1px solid #ececec;
 }

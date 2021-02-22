@@ -1,0 +1,92 @@
+.menu {
+    padding: 10px;
+    margin: 0px;
+    
+}
+
+.menu li {
+    list-style: none;
+    padding: 5px;
+}
+
+.menunav li:hover {
+    background: #f3ed3d;
+    
+}
+
+.menu > a {
+    color: black;
+}
+
+.menu a:hover {
+    color: black;
+    text-decoration: none;
+}
+
+.menunav {
+    border-right: 1px solid lightgrey;
+}
+
+.content {
+    padding-left: 20px;
+    width: 100%;
+}
+
+.hostname {
+    color: grey;
+    font-size: 10px;
+}
+
+.header {
+    background-color: #f3ed3d; 
+    padding-top: 20px;
+    padding-left: 20px; 
+    font-size: 40px;
+}
+
+.header a {
+    color: black;
+}
+
+.subheader {
+    /* font-family: 'eraser';*/
+    background-color: #f3ed3d;
+    padding-bottom: 5px;
+}
+
+.subheader a {
+    color: black;
+    padding-left: 20px; 
+}
+
+.subsubheader {
+    background-color: #f3ed3d;
+    padding-bottom: 20px;
+    font-size: 10px;
+    padding-left: 20px; 
+}
+
+.subsubheader a {
+    color: black;
+    
+    font-size: 10px;
+}
+
+.burger img {
+    padding-top: 55px;
+    position: absolute;
+    right: 30px;
+    width: 30px;
+}
+
+.menu-mobile {
+    background: #000;
+}
+
+.menu-mobile li {
+    color: white;
+}
+
+.menu-mobile li:hover {
+    color: #000;
+}

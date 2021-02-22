@@ -1,219 +1,258 @@
 <?php
-/**
- * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
- *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
- * @link      https://cakephp.org CakePHP(tm) Project
- * @since     0.10.0
- * @license   https://opensource.org/licenses/mit-license.php MIT License
- * @var \App\View\AppView $this
- */
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Datasource\ConnectionManager;
 use Cake\Error\Debugger;
-use Cake\Http\Exception\NotFoundException;
+use Cake\Network\Exception\NotFoundException;
 
 $this->disableAutoLayout();
-
-if (!Configure::read('debug')) :
-    throw new NotFoundException(
-        'Please replace templates/Pages/home.php with your own version or re-enable debug mode.'
-    );
-endif;
-
-$cakeDescription = 'CakePHP: the rapid development PHP framework';
 ?>
 <!DOCTYPE html>
-<html>
-<head>
-    <?= $this->Html->charset() ?>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>
-        <?= $cakeDescription ?>:
-        <?= $this->fetch('title') ?>
-    </title>
-    <?= $this->Html->meta('icon') ?>
+<html prefix="og: http://ogp.me/ns#">
+    <head>
+        <meta property="og:title" content="Yellowdesks" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.yellowdesks.com" />
+        <meta property="og:image" content="https://www.yellowdesks.com/img/opengraph_image_yellowdesks.jpg" />
+        <meta property="og:app_id" content="349857342038820" />
 
-    <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
+	    <link rel="alternate" href="https://www.yellowdesks.com/" hreflang="en" />
 
-    <?= $this->Html->css(['normalize.min', 'milligram.min', 'cake', 'home']) ?>
+        <?php //google maps renders map objects (streets, markers, ..) much bigger ?>
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 
-    <?= $this->fetch('meta') ?>
-    <?= $this->fetch('css') ?>
-    <?= $this->fetch('script') ?>
-</head>
-<body>
-    <header>
-        <div class="container text-center">
-            <a href="https://cakephp.org/" target="_blank" rel="noopener">
-                <img alt="CakePHP" src="https://cakephp.org/v2/img/logos/CakePHP_Logo.svg" width="350" />
-            </a>
-            <h1>
-                Welcome to CakePHP <?php echo Configure::version() ?> Strawberry (🍓)
-            </h1>
+        <script type="text/javascript">
+            var baseurl = "<?= $this->Url->build("/", []) ?>";
+        </script>
+
+        <!-- Piwik -->
+        <script type="text/javascript">
+            var _paq = _paq || [];
+            /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+            _paq.push(['trackPageView']);
+            _paq.push(['enableLinkTracking']);
+            (function() {
+                var u="https://piwik.langhofer.at/";
+                _paq.push(['setTrackerUrl', u+'piwik.php']);
+                _paq.push(['setSiteId', '1']);
+                var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+                g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+            })();
+        </script>
+        <!-- End Piwik Code -->
+
+        <script src="js/jquery-1.9.1.min.js"></script>
+        
+        <?= $this->Html->css('../3rdparty/lightslider/css/lightslider.css') ?>
+        <style>
+            .demo {
+                width: 250px;
+            }
+        </style>
+
+        <?= $this->Html->script('../3rdparty/lightslider/js/lightslider.js'); ?>
+
+        <?= $this->Html->css('main.css') ?>
+
+        <?= $this->Html->script('home.js'); ?>
+        <?= $this->Html->css('home.css') ?>
+
+        <?= $this->Html->script('menu.js'); ?>
+
+        <meta charset="utf-8">
+        <title>Yellowdesks: workspace near you</title>
+        <meta name="description" content="Yellowdesks - Workspace near you">
+
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+        <link rel="stylesheet" href="fonts/eraser/stylesheet.css">
+        <link rel="stylesheet" href="fonts/din1451/stylesheet.css">
+        
+        <script>
+            <?php
+                // security: only expose public fields
+                $rets = [];
+                foreach ($rows as $row) {
+                    $ret = new stdClass();
+
+                    if (strpos($row->nickname, "test") === 0 && ($loggedinuser == null || $loggedinuser->role != "ADMIN"))
+                        continue;
+                    $ret-> id = $row -> id;
+                    $ret-> nickname = $row -> nickname;
+                    $ret-> title = $row -> title;
+                    $ret-> details = $row -> details;
+                    $ret-> extras = $row -> extras;
+                    $ret-> lat = $row -> lat;
+                    $ret-> lng = $row -> lng;
+                    $ret-> open_monday_from = $row -> open_monday_from == null ? null : date("H:i", strtotime($row -> open_monday_from));
+                    $ret-> open_monday_till = $row -> open_monday_till == null ? null : date("H:i", strtotime($row -> open_monday_till));
+                    $ret-> open_tuesday_from = $row -> open_tuesday_from == null ? null : date("H:i", strtotime($row -> open_tuesday_from));
+                    $ret-> open_tuesday_till = $row -> open_tuesday_till == null ? null : date("H:i", strtotime($row -> open_tuesday_till));
+                    $ret-> open_wednesday_from = $row -> open_wednesday_from == null ? null : date("H:i", strtotime($row -> open_wednesday_from));
+                    $ret-> open_wednesday_till = $row -> open_wednesday_till == null ? null : date("H:i", strtotime($row -> open_wednesday_till));
+                    $ret-> open_thursday_from = $row -> open_thursday_from == null ? null : date("H:i", strtotime($row -> open_thursday_from));
+                    $ret-> open_thursday_till = $row -> open_thursday_till == null ? null : date("H:i", strtotime($row -> open_thursday_till));
+                    $ret-> open_friday_from = $row -> open_friday_from == null ? null : date("H:i", strtotime($row -> open_friday_from));
+                    $ret-> open_friday_till = $row -> open_friday_till == null ? null : date("H:i", strtotime($row -> open_friday_till));
+                    $ret-> open_saturday_from = $row -> open_saturday_from == null ? null : date("H:i", strtotime($row -> open_saturday_from));
+                    $ret-> open_saturday_till = $row -> open_saturday_till == null ? null : date("H:i", strtotime($row -> open_saturday_till));
+                    $ret-> open_sunday_from = $row -> open_sunday_from == null ? null : date("H:i", strtotime($row -> open_sunday_from));
+                    $ret-> open_sunday_till = $row -> open_sunday_till == null ? null : date("H:i", strtotime($row -> open_sunday_till));
+                    $ret-> price_1day = $row -> price_1day;
+                    $ret-> price_10days = $row -> price_10days;
+                    $ret-> price_1month = $row -> price_1month;
+                    $ret-> price_6months = $row -> price_6months;
+
+                    $ret-> pictureids = [];
+
+                    if ($row -> picture_id != null)
+                        array_push($ret-> pictureids, $row -> picture_id);
+
+                    foreach ($row -> pictures as $picture) {
+                        array_push($ret-> pictureids, $picture -> id);
+                    }
+
+                    if (isset ($row -> videos[0]))
+                        $ret-> videourl = $row -> videos[0] -> url;
+
+
+                    array_push($rets, $ret);
+                }
+            ?>
+            var hosts = <?= json_encode($rets); ?>;
+        </script>
+
+        <?php
+            $url = $this->Url->build('/favicon.jpg', []);
+        ?>
+        <link rel="icon" type="image/jpeg" href="<?= $url ?>" />
+    </head>
+    <style>
+        .iframelightbox {
+            width: 80%;
+            height: 80%;
+            left: 10%;
+            top: 10%;
+            z-index: 1000;
+            position: absolute;
+            display: none;
+        }
+        @media (max-width: 600px) {
+            .iframelightbox {
+                left: 1%;
+                top: 1%;
+                width: 98%;
+                height: 98%;
+                padding-top: 55px;
+            }
+        }
+        .iframelightbox iframe{
+            width: 100%;
+            height: 100%;
+        }
+        .iframeclose {
+            right: 0px;
+            padding: 7px;
+            margin: 2px;
+            position: absolute;
+            background-color: #ececec;
+            cursor: pointer;
+        }
+    </style>
+    
+    <body>
+        <div class="iframelightbox">
+            <a class="iframeclose">CLOSE</a>
+            <iframe src=""></iframe>
         </div>
-    </header>
-    <main class="main">
-        <div class="container">
-            <div class="content">
-                <div class="row">
-                    <div class="column">
-                        <div class="message default text-center">
-                            <small>Please be aware that this page will not be shown if you turn off debug mode unless you replace templates/Pages/home.php with your own version.</small>
-                        </div>
-                        <!-- <div id="url-rewriting-warning" class="alert url-rewriting">
-                            <ul>
-                                <li class="bullet problem">
-                                    URL rewriting is not properly configured on your server.<br />
-                                    1) <a target="_blank" rel="noopener" href="https://book.cakephp.org/4/en/installation.html#url-rewriting">Help me configure it</a><br />
-                                    2) <a target="_blank" rel="noopener" href="https://book.cakephp.org/4/en/development/configuration.html#general-configuration">I don't / can't use URL rewriting</a>
-                                </li>
-                            </ul>
-                        </div> -->
-                        <?php Debugger::checkSecurityKeys(); ?>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="column">
-                        <h4>Environment</h4>
-                        <ul>
-                        <?php if (version_compare(PHP_VERSION, '7.2.0', '>=')) : ?>
-                            <li class="bullet success">Your version of PHP is 7.2.0 or higher (detected <?php echo PHP_VERSION ?>).</li>
-                        <?php else : ?>
-                            <li class="bullet problem">Your version of PHP is too low. You need PHP 7.2.0 or higher to use CakePHP (detected <?php echo PHP_VERSION ?>).</li>
-                        <?php endif; ?>
+        <div class="menunavdesktopanchor">
+        </div>
+        <div class="menunav">
+            <div class="menu">
+                <?php
+                
+                $urlroot = $this->Url->build("/");
 
-                        <?php if (extension_loaded('mbstring')) : ?>
-                            <li class="bullet success">Your version of PHP has the mbstring extension loaded.</li>
-                        <?php else : ?>
-                            <li class="bullet problem">Your version of PHP does NOT have the mbstring extension loaded.</li>
-                        <?php endif; ?>
+                $urlprofile = $this->Url->build([
+                        "controller" => "users",
+                        "action" => "welcome",
+                    ]);
 
-                        <?php if (extension_loaded('openssl')) : ?>
-                            <li class="bullet success">Your version of PHP has the openssl extension loaded.</li>
-                        <?php elseif (extension_loaded('mcrypt')) : ?>
-                            <li class="bullet success">Your version of PHP has the mcrypt extension loaded.</li>
-                        <?php else : ?>
-                            <li class="bullet problem">Your version of PHP does NOT have the openssl or mcrypt extension loaded.</li>
-                        <?php endif; ?>
+                $urlbecomeahost = $this->Url->build([
+                        "controller" => "users",
+                        "action" => "becomeahost",
+                    ]);
 
-                        <?php if (extension_loaded('intl')) : ?>
-                            <li class="bullet success">Your version of PHP has the intl extension loaded.</li>
-                        <?php else : ?>
-                            <li class="bullet problem">Your version of PHP does NOT have the intl extension loaded.</li>
-                        <?php endif; ?>
-                        </ul>
-                    </div>
-                    <div class="column">
-                        <h4>Filesystem</h4>
-                        <ul>
-                        <?php if (is_writable(TMP)) : ?>
-                            <li class="bullet success">Your tmp directory is writable.</li>
-                        <?php else : ?>
-                            <li class="bullet problem">Your tmp directory is NOT writable.</li>
-                        <?php endif; ?>
+                $urlregister = $this->Url->build([
+                        "controller" => "users",
+                        "action" => "signup",
+                    ]);
+                
+                if ($loggedinuser == null) {
+                    $url = $this->Url->build([
+                        "controller" => "users",
+                        "action" => "login",
+                    ]);
+                    $loginlogouttext = __("Login");
+                } else {
+                    $url = $this->Url->build([
+                        "controller" => "users",
+                        "action" => "logout",
+                    ]);
+                    $loginlogouttext = __("Logout");
+                }
+                ?>
 
-                        <?php if (is_writable(LOGS)) : ?>
-                            <li class="bullet success">Your logs directory is writable.</li>
-                        <?php else : ?>
-                            <li class="bullet problem">Your logs directory is NOT writable.</li>
-                        <?php endif; ?>
+                <a class="questionmark" href="<?= $this->Url->build("/", []) ?>/faqs"><img src="<?= $urlroot ?>img/questionmark_bw_transparent.png" /></a>
+                <a class="facebooklogo" target="_blank" href="https://www.facebook.com/yellowdesks/"><img src="<?= $urlroot ?>img/facebook_transparent.png" /></a>
+                <a class="androidlogo" target="_blank" href="https://play.google.com/store/apps/details?id=com.yellowdesks.android"><img src="<?= $urlroot ?>img/android_logo_bw_transparent.png" /></a>
+                
+                <?php if ($loggedinuser == null) { ?>
+                    <a href="<?= $urlbecomeahost ?>">Become A Host</a>
+                    <a href="<?= $urlregister ?>">Sign Up</a>
+                <?php } else { ?>
+                    <a href="<?= $urlprofile ?>"><?= __("Profile") ?></a>
+                <?php } ?>
 
-                        <?php $settings = Cache::getConfig('_cake_core_'); ?>
-                        <?php if (!empty($settings)) : ?>
-                            <li class="bullet success">The <em><?php echo $settings['className'] ?>Engine</em> is being used for core caching. To change the config edit config/app.php</li>
-                        <?php else : ?>
-                            <li class="bullet problem">Your cache is NOT working. Please check the settings in config/app.php</li>
-                        <?php endif; ?>
-                        </ul>
-                    </div>
-                </div>
-                <hr>
-                <div class="row">
-                    <div class="column">
-                        <h4>Database</h4>
-                        <?php
-                        try {
-                            $connection = ConnectionManager::get('default');
-                            $connected = $connection->connect();
-                        } catch (Exception $connectionError) {
-                            $connected = false;
-                            $errorMsg = $connectionError->getMessage();
-                            if (method_exists($connectionError, 'getAttributes')) :
-                                $attributes = $connectionError->getAttributes();
-                                if (isset($errorMsg['message'])) :
-                                    $errorMsg .= '<br />' . $attributes['message'];
-                                endif;
-                            endif;
-                        }
-                        ?>
-                        <ul>
-                        <?php if ($connected) : ?>
-                            <li class="bullet success">CakePHP is able to connect to the database.</li>
-                        <?php else : ?>
-                            <li class="bullet problem">CakePHP is NOT able to connect to the database.<br /><?php echo $errorMsg ?></li>
-                        <?php endif; ?>
-                        </ul>
-                    </div>
-                    <div class="column">
-                        <h4>DebugKit</h4>
-                        <ul>
-                        <?php if (Plugin::isLoaded('DebugKit')) : ?>
-                            <li class="bullet success">DebugKit is loaded.</li>
-                        <?php else : ?>
-                            <li class="bullet problem">DebugKit is NOT loaded. You need to either install pdo_sqlite, or define the "debug_kit" connection name.</li>
-                        <?php endif; ?>
-                        </ul>
-                    </div>
-                </div>
-                <hr>
-                <div class="row">
-                    <div class="column links">
-                        <h3>Getting Started</h3>
-                        <a target="_blank" rel="noopener" href="https://book.cakephp.org/4/en/">CakePHP Documentation</a>
-                        <a target="_blank" rel="noopener" href="https://book.cakephp.org/4/en/tutorials-and-examples/cms/installation.html">The 20 min CMS Tutorial</a>
-                    </div>
-                </div>
-                <hr>
-                <div class="row">
-                    <div class="column links">
-                        <h3>Help and Bug Reports</h3>
-                        <a target="_blank" rel="noopener" href="irc://irc.freenode.net/cakephp">irc.freenode.net #cakephp</a>
-                        <a target="_blank" rel="noopener" href="http://cakesf.herokuapp.com/">Slack</a>
-                        <a target="_blank" rel="noopener" href="https://github.com/cakephp/cakephp/issues">CakePHP Issues</a>
-                        <a target="_blank" rel="noopener" href="http://discourse.cakephp.org/">CakePHP Forum</a>
-                    </div>
-                </div>
-                <hr>
-                <div class="row">
-                    <div class="column links">
-                        <h3>Docs and Downloads</h3>
-                        <a target="_blank" rel="noopener" href="https://api.cakephp.org/">CakePHP API</a>
-                        <a target="_blank" rel="noopener" href="https://bakery.cakephp.org">The Bakery</a>
-                        <a target="_blank" rel="noopener" href="https://book.cakephp.org/4/en/">CakePHP Documentation</a>
-                        <a target="_blank" rel="noopener" href="https://plugins.cakephp.org">CakePHP plugins repo</a>
-                        <a target="_blank" rel="noopener" href="https://github.com/cakephp/">CakePHP Code</a>
-                        <a target="_blank" rel="noopener" href="https://github.com/FriendsOfCake/awesome-cakephp">CakePHP Awesome List</a>
-                        <a target="_blank" rel="noopener" href="https://www.cakephp.org">CakePHP</a>
-                    </div>
-                </div>
-                <hr>
-                <div class="row">
-                    <div class="column links">
-                        <h3>Training and Certification</h3>
-                        <a target="_blank" rel="noopener" href="https://cakefoundation.org/">Cake Software Foundation</a>
-                        <a target="_blank" rel="noopener" href="https://training.cakephp.org/">CakePHP Training</a>
-                    </div>
-                </div>
+                <a href="<?= $url ?>"><?= $loginlogouttext ?></a>
             </div>
         </div>
-    </main>
-</body>
+        <div class="burger">
+            <a class="androidlogo" target="_blank" href="https://play.google.com/store/apps/details?id=com.yellowdesks.android"><img src="<?= $urlroot ?>img/android_logo_bw_transparent.png" /></a>
+            <img src="<?= $this->Url->build("/img/burger.png"); ?>" />
+        </div>
+
+
+        <div class="content home-content" id="home-logo">
+            <span class="yellowdesks">yellow desks</span>
+            <div class="yellowlinks">
+                <span class="findandrent"><a href="https://www.yellowdesks.com/users/login" title="become a host" alt="become a host">&gt; &gt;  <strong>Find</strong> flexible work space near you</a></span>
+            </div>
+            <div class="yellowlinks">
+                <span class="findandrent"><a href="https://www.yellowdesks.com/users/becomeahost" title="become a host" alt="become a host">&gt; &gt; <strong>Rent out</strong> work space</a></span>
+            </div>
+        </div>
+        
+        <div class="footer"><a href="http://coworkingsalzburg.com">by <span class="coworkingsalzburg"><strong>COWORKING</strong>SALZBURG</span></a></div>
+    
+        <input type="text" id="pac-input" />
+    
+        <div class="mobilemenu"></div>
+        <div id="map"></div>
+
+        <!-- Start of Rocket.Chat Livechat Script
+        <script type="text/javascript">
+        (function(w, d, s, u) {
+            w.RocketChat = function(c) { w.RocketChat._.push(c) }; w.RocketChat._ = []; w.RocketChat.url = u;
+            var h = d.getElementsByTagName(s)[0], j = d.createElement(s);
+            j.async = true; j.src = 'https://rocket.langhofer.at/packages/rocketchat_livechat/assets/rocketchat-livechat.min.js?_=201702160944';
+            h.parentNode.insertBefore(j, h);
+        })(window, document, 'script', 'https://rocket.langhofer.at/livechat');
+        </script>
+        End of Rocket.Chat Livechat Script -->
+
+    </body>
 </html>

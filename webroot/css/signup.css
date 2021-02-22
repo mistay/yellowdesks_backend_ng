@@ -1,0 +1,97 @@
+.flexbox {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    -webkit-flex-wrap: wrap;
+}
+
+.signup.flexbox {
+ margin-top: 30px;
+    margin-bottom: 50px;
+}
+
+.inputs h3 {
+margin-top: 40px;
+}
+
+.description {
+    flex: 1;
+    padding-right: 100px;
+    min-width: 300px;
+}
+.signupform {
+    flex: 2;
+}
+
+.signup table tr td, .signup tr {
+    background: white;
+}
+
+.signup input[type=text], .signup input[type=password] {
+   /* border: 0px;
+    border-bottom: 0px dotted black;*/
+}
+
+.signup input[type=submit], button {
+    border: 1px solid black;
+    height: 40px;
+    background-color: white;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.signup #finish {
+    background-color: #000;
+    color: #f3ed3d;
+}
+.signup #finish:hover {
+    background-color: #f3ed3d;
+    color: #000;
+}
+
+label {
+    font-size: 12px;
+}
+
+input, button, textarea {
+    font-size: 18px;
+    padding: 8px 10px;
+    margin-bottom: 4px;
+}
+
+tr.space {
+    height: 50px;
+    vertical-align: bottom;
+}
+
+tr.inputs {
+    height: 30px;
+}
+
+td {
+    padding-right: 50px;
+}
+
+span {
+    font-size: 10px;
+}
+
+.errorline {
+    line-height: 7px;
+    height: 1px;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+
+.right {
+    float: right;
+}
+
+.error, input[type="text"].error, input[type="password"].error  {
+    border: 1px dotted red;
+}
