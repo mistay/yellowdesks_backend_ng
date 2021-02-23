@@ -2,6 +2,7 @@
 
 <div>
     <form name="form1" method="post">
+    <input type="hidden" name="_csrfToken" autocomplete="off" value="<?= $this->request->getAttribute('csrfToken') ?>" />
 
         <?= __("Please provide the e-mail address that is ascociated with your profile. We'll send you a link to set a new password.") ?>
         <input type="text" name="email" placeholder="me@example.com" />

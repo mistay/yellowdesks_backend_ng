@@ -23,7 +23,7 @@ class ConfigsController extends AppController {
         if ($id>0) {
             $row = $model->get($id);
         } else {
-            $row = $model->newEntity();
+            $row = $model->newEntity([]);
         }
         $this->set("row", $row);
         if (!empty($this->request->getData())) {

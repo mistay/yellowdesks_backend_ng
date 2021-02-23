@@ -9,6 +9,7 @@
     </div>
     <div class="signupform">
         <form name="form1" method="post">
+            <input type="hidden" name="_csrfToken" autocomplete="off" value="<?= $this->request->getAttribute('csrfToken') ?>" />
             <table>
                 <tr class="space">
                     <td><label for="companyname">Company Name</label></td>

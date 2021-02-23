@@ -38,6 +38,12 @@
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
 
+<?php
+    echo $this->Html->meta('csrfToken', $this->request->getAttribute('csrfToken'));
+?>
+
+
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <?= $this->Html->script('yellowdesks.js'); ?>
     <?= $this->Html->script('menu.js'); ?>

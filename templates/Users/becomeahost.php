@@ -11,6 +11,7 @@
     </div>
     <div class="signupform">
         <form name="form1" method="post">
+        <input type="hidden" name="_csrfToken" autocomplete="off" value="<?= $this->request->getAttribute('csrfToken') ?>" />
             <div id="step1">
                 <h3>Your personal data</h3>
                 <table id="table1">

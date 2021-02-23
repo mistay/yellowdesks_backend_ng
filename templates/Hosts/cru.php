@@ -1,7 +1,7 @@
 <h2><?= $row->isNew() ? "Add Host" : $isHost ? "My Profile" : "Edit Host" ?></h2>
 
-
-<form name="form1" method="post">
+<form name="form1" id="form1" method="post">
+<input type="hidden" name="_csrfToken" autocomplete="off" value="<?= $this->request->getAttribute('csrfToken') ?>" />
     <table>
         <tr>
             <th>Name</th>

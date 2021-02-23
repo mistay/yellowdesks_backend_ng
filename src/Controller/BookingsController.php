@@ -379,7 +379,7 @@ example: coworker books from 31.10.2017 to 7.11.2017 at host "coworkingsalzburg"
 
         $total_bookings = 0;
         
-        $row = $this -> Bookings -> newEntity();
+        $row = $this -> Bookings -> newEntity([]);
         if ($requestOffer !== false)
             $row -> coworker_id = $user -> id;
         $row -> payment_id = null;

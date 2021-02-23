@@ -1,6 +1,7 @@
 <h2>Add Picture</h2>
 
 <form name="form1" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="_csrfToken" autocomplete="off" value="<?= $this->request->getAttribute('csrfToken') ?>" />
     <?php $loggedinuser = $this->request->session()->read('User'); ?>
          
     <?php if ($loggedinuser -> role == "ADMIN") { ?>

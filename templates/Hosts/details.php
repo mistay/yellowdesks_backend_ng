@@ -48,10 +48,23 @@
 <div class="demo">
     <ul class="lightSlider">
         <?php if (isset($row -> videos [0])) { ?>
-            <li><video width="320" controls><source src="<?= $this->Url->build(["controller" => "videos", "action" => "",  $row -> videos [0] -> url]); ?>" type="video/mp4"></video></li>
+            <li><video width="320" controls><source src="<?= $this->Url->build([
+                    "controller" => "videos", 
+                    "action" => "",
+                    $row -> videos [0] -> url
+                ]);
+                ?>" type="video/mp4"></video></li>
         <?php } ?>
         <?php foreach ($row -> pictures as $picture) { ?>
-            <li><img src="<?= $this->Url->build(["controller" => "pictures", "action" => "get", $picture->id, "resolution" => "800x300", "crop" => true]); ?>"/></li>
+            <li><img src="<?= $this->Url->build([
+                "controller" => "pictures", 
+                "action" => "get", 
+                $picture->id, 
+                "?" => [ 
+                    "resolution" => "800x300", 
+                    "crop" => true
+                ]
+            ]); ?>" /></li>
         <?php } ?>
     </ul>
 </div>

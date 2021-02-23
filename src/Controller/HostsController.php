@@ -5,9 +5,12 @@ use App\Controller\AppController;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
 use Cake\Event\Event;
+use Cake\Event\EventInterface;
+use Cake\Http\Middleware\CsrfProtectionMiddleware;
+use Cake\Controller\Component\CsrfComponent;
+
 
 class HostsController extends AppController {
-    
     // called by jquery ajax
     public function setposition() {
         $this->autoRender=false;
@@ -79,7 +82,7 @@ class HostsController extends AppController {
         if ($id>0) {
             $row = $model->get($id);
         } else {
-            $row = $model->newEntity();
+            $row = $model->newEntity([]);
         }
         $this->set("row", $row);
         if (!empty($this->request->getData())) {
@@ -143,7 +146,7 @@ class HostsController extends AppController {
     }
     
     public function details($host_id = null) {
-        $this->viewBuilder()->layout('lightbox');
+        $this->viewBuilder()->setLayout('lightbox');
 
         $model = TableRegistry::get('Hosts');
         $query = $model->find('all')
@@ -157,7 +160,6 @@ class HostsController extends AppController {
         $this->set("row", $row);
 
         $this->set("user", $this->getloggedinUser());
-
     }
     
     // todo: request device information (display size) and send imageURL with correct resolution

@@ -1219,11 +1219,28 @@ class CrumbsController extends Controller {
         
         if ($authed != null) {
             $this -> getRequest() -> getSession()-> write('User', $authed);
+
+            $token = $this->generateRandomString(25);
+            $this -> getRequest() -> getSession()-> write('CSRFTOKEN', $token);
+
+
+
         } else {
             $model2 -> info("auth() not successfully auth'ed username: " . $username);
             $this -> Flash -> success('Unable to login. Either username or password is incorrect.');
         }
     }
+
+    function generateRandomString($length = 10) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
+
 
     /**
      * returns: true if pass could be updated, array with errors in case of error

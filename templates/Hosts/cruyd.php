@@ -2,6 +2,7 @@
 
 
 <form name="form1" method="post">
+    <input type="hidden" name="_csrfToken" autocomplete="off" value="<?= $this->request->getAttribute('csrfToken') ?>" />
     <table>
 	<tr>
             <th>Enable<input type="hidden" name="enableyd" value="0" /></th>
