@@ -423,9 +423,10 @@ example: coworker books from 31.10.2017 to 7.11.2017 at host "coworkingsalzburg"
 
         if (@$_REQUEST["jsonbrowser"]) echo "<pre>";
 
-        $this->autoRender = false;
-        $this->response->type('application/json');
-        $this->response->body(json_encode($rets, JSON_PRETTY_PRINT));
+
+        return $this->response
+            ->withType('application/json')
+            ->withStringBody(json_encode($rets, JSON_PRETTY_PRINT));
     }
  
 }
