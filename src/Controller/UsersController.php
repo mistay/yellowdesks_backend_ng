@@ -7,9 +7,12 @@ use Cake\ORM\TableRegistry;
 use Cake\Mailer\Email;
 use Cake\Routing\Router;
 
+
+use Cake\Mailer\Mailer;
+use Cake\Mailer\TransportFactory;
+
 class UsersController extends AppController
 {
-
     public function signupsuccess() {
 
     } 
@@ -17,7 +20,7 @@ class UsersController extends AppController
     public function becomeahost() {
 
         if ($this -> request -> is('post')) {
-            $data = $this -> request -> data;
+            $data = $this -> getRequest() -> getData();
 
             // sticky form
             $this->set("data", $data);
@@ -121,15 +124,27 @@ class UsersController extends AppController
                 $this -> appconfigs ["emailfooter"]
                 );
 
-            $this -> sendMail($data["email"], $this -> appconfigs["emailsender"], __('Welcome to {0}', $this -> appconfigs['projectname'] ), $message);
+            $mailer = new Mailer();
+            $mailer
+                ->setTransport('lqh')
+                ->setEmailFormat('html')
+                ->setTo($data["email"])
+                ->setFrom($this -> appconfigs["emailsender"])
+                ->setSubject(__('Welcome to {0}', $this -> appconfigs['projectname']))
+                ->viewBuilder()
+                    ->setHelpers(['Html'])
+                    ->setTemplate('default')
+                    ->setLayout('fancy');
+
+            $mailer->deliver("$message");
 
             $this->redirect(["action" => "signupsuccess"]);
         }
     }
 
     public function signup() {
-        if ($this -> request -> is('post')) {
-            $data = $this -> request -> data;
+        if ($this -> getRequest() -> is('post')) {
+            $data = $this -> getRequest() -> getData();
 
             // sticky form
             $this->set("data", $data);
@@ -170,7 +185,7 @@ class UsersController extends AppController
             }
 
             $model = TableRegistry::get('Coworkers');
-            $row = $model -> newEntity();
+            $row = $model -> newEntity([]);
             $data["username"] = $data["email"];
             $data["password"] = password_hash($data["password"], PASSWORD_BCRYPT);
 
@@ -195,8 +210,20 @@ class UsersController extends AppController
                 $this -> appconfigs ["emailfooter"]
                 );
 
-            $this -> sendMail($row -> email, $this -> appconfigs["emailsender"], __('Welcome to {0}', $this -> appconfigs['projectname']), $message);
-            
+            $mailer = new Mailer();
+            $mailer
+                ->setTransport('lqh')
+                ->setEmailFormat('html')
+                ->setTo($row -> email)
+                ->setFrom($this -> appconfigs["emailsender"])
+                ->setSubject(__('Welcome to {0}', $this -> appconfigs['projectname']))
+                ->viewBuilder()
+                    ->setHelpers(['Html'])
+                    ->setTemplate('default')
+                    ->setLayout('fancy');
+
+            $mailer->deliver($message);
+
             $this->redirect(["action" => "signupsuccess"]);
         }
     }

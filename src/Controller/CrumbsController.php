@@ -13,7 +13,8 @@ use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
 
 use Cake\Core\Configure\Engine\PhpConfig;
-use Cake\Mailer\Email;
+//use Cake\Mailer\Email;
+use Cake\Mailer\Mailer;
 
 /* v1.46
  * first edit: 20130628
@@ -1083,12 +1084,23 @@ class CrumbsController extends Controller {
             array_push($recipients, trim($this -> appconfigs ["emailrecipientdebug"]));
         }
 
-        $email = new Email();
-        $email -> setTransport('appdefault');
+
+        $mailer = new Mailer('default');
+
+        //$email = new Email();
+        //$email -> setTransport('appdefault');
 
         foreach ($recipients as $recipient) {
             if (trim($recipient) != "") 
-                $email
+
+                $mailer->setFrom([$from => 'Yellowdesks ' . $from])
+                    ->setTo($recipient)
+                    ->setSubject($subject)
+                    ->deliver($message);
+
+
+
+/*                $email
                     ->setTemplate('default')
                     ->setLayout('fancy')
                     ->setEmailFormat('both')
@@ -1096,10 +1108,11 @@ class CrumbsController extends Controller {
                     ->setFrom( $from )
                     ->subject( $subject )
                     ->send( $message );
+                    */
         }
         
         $modelemails = TableRegistry::get('Emails');
-        $emailrow = $modelemails -> newEntity();
+        $emailrow = $modelemails -> newEntity([]);
 
         $emailrow["actualrecipients"] = join($recipients, ", ");
         $emailrow["originalrecipients"] = $to;

@@ -17,6 +17,8 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Cake\Controller\Controller;
+use Cake\ORM\TableRegistry;
+use Cake\Mailer\TransportFactory;
 
 /**
  * Application Controller
@@ -28,6 +30,10 @@ use Cake\Controller\Controller;
  */
 class AppController extends CrumbsController
 {
+
+    var $appconfigs = [];
+
+
     /**
      * Initialization hook method.
      *
@@ -49,6 +55,26 @@ class AppController extends CrumbsController
          * see https://book.cakephp.org/4/en/controllers/components/form-protection.html
          */
         //$this->loadComponent('FormProtection');
+        //$this->response = $this->response->withHeader('X-API-Level', '1');
+
+        $model = TableRegistry::get('Configs');
+        $query = $model->find('all');
+        foreach ($query as $tmp) {
+            $this -> appconfigs [$tmp["configkey"]] = $tmp["configvalue"];
+        }
+
+        TransportFactory::setConfig('lqh', [
+            'host' => $this -> appconfigs['emailhost'],
+            'port' => 587,
+            'username' => $this -> appconfigs['emailusername'],
+            'password' => $this -> appconfigs['emailpassword'],
+            'className' => 'Smtp',
+            'tls' => true,
+        ]);
+    }
+
+    public function timegmt() {
+        return time() - (int)substr(date('O'),0,3)*60*60;
     }
 
     public function cleanupbookings() {
