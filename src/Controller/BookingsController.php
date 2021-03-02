@@ -337,14 +337,14 @@ example: coworker books from 31.10.2017 to 7.11.2017 at host "coworkingsalzburg"
             // 1st rule
             $rets["debug_rule"] = 1;
             $total = ($timespan["months"] + ($timespan["days"] / 30)) * $host -> price_6months / 6;
-            $total *= 1 + $host -> servicefee;
+            //$total *= 1 + $host -> servicefee;
         } elseif ($timespan["months"] >= 1 && $host -> price_1month > 0) {
             // 2nd rule
             // zieht nur wenn host einen monats-satz hinterlegt hat
 
             $rets["debug_rule"] = 2;
             $total = ($timespan["months"] + ($timespan["days"] / 30)) * $host -> price_1month;
-            $total *= 1 + $host -> servicefee;
+            //$total *= 1 + $host -> servicefee;
         } else {
             $workingdays = $this -> calculate_workingdays($hostid, $begin, $end);
             $rets["workingdays"] = $workingdays;
@@ -354,12 +354,12 @@ example: coworker books from 31.10.2017 to 7.11.2017 at host "coworkingsalzburg"
                 // 3rd rule
                 $rets["debug_rule"] = 3;
                 $total = sizeof($workingdays) * $host -> price_10days / 10;
-                $total *= 1 + $host -> servicefee;
+                //$total *= 1 + $host -> servicefee;
             } elseif (sizeof($workingdays) >= 1)  {
                 // 4th rule
                 $rets["debug_rule"] = 4;
                 $total = sizeof($workingdays) * $host -> price_1day;
-                $total *= 1 + $host -> servicefee;
+                //$total *= 1 + $host -> servicefee;
             }
         }
 
@@ -386,15 +386,16 @@ example: coworker books from 31.10.2017 to 7.11.2017 at host "coworkingsalzburg"
         $row -> host_id = $hostid;
         $row -> description = $booking[ "type" ];
         $row -> price = $booking[ "price" ];
-        $row -> servicefee_host = $booking[ "price" ] * $host -> servicefee; // 20% to YD
+        $row -> servicefee_host = $booking[ "price" ] - $booking[ "price" ] / (1+$host -> servicefee); // 20% to YD
 		
-	// gueltige, nicht .at-uid nummer hinterlegt?
-	$row -> vat = ($user-> vatid_successfully_checked != null && strpos(strtolower($host -> vatid), "at") === false) ? 
-		0 : $row -> vat = round(($booking[ "price" ] / 100 * 20), 2, PHP_ROUND_HALF_UP);
+	    // gueltige, nicht .at-uid nummer hinterlegt?
+        $row -> vat = ($user-> vatid_successfully_checked != null && strpos(strtolower($user -> vatid), "at") === false) ? 
+            0 : round(($booking[ "price" ] / 100 * 20), 2, PHP_ROUND_HALF_UP);
 
-        $row -> amount_host = $row -> price; // - $row -> servicefee_host;
-	$row -> vat_host = ($host -> vatid_successfully_checked != null && strpos(strtolower($host -> vatid), "at") === false) ?
-		0 : round(($row -> amount_host / 100 * 20), 2, PHP_ROUND_HALF_UP);
+        $row -> amount_host = $booking[ "price" ] / (1+$host -> servicefee);
+
+        $row -> vat_host = ($host -> vatid_successfully_checked != null && strpos(strtolower($host -> vatid), "at") === false) ?
+            0 : round(($row -> amount_host / 100 * 20), 2, PHP_ROUND_HALF_UP);
 
         $row -> begin = date("Y-m-d", strtotime($booking[ "begin" ]));
         $row -> end = date("Y-m-d", strtotime($booking[ "end" ]));

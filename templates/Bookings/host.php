@@ -33,37 +33,35 @@ $total=0;
 
 <br />
 <br />
-
+<?php $count=1; $total=0; ?>
 <table>
     <tr>
-        <th>id</th>
+        <th>No</th>
         <th>Booking Date</th>
         <th>Begin</th>
         <th>End</th>
         <th>Coworker</th>
-        <th>Price excl. VAT</th>
+        <th>Price<br />excl. VAT</th>
         <th>VAT</th>
-        <th>Total</th>
+        <th>Total<br />incl. VAT</th>
     </tr>
-    <?php foreach ($rows as $row): $total=0; ?>
+    <?php foreach ($rows as $row): ?>
     <tr>
-        <td><?= $row -> id ?></td>
-        <td><?php echo date("d.m.Y", strtotime($row->dt_inserted)); ?></td>
-        <td><?php echo date("d.m.Y", strtotime($row->begin)); ?></td>
-        <td><?php echo date("d.m.Y", strtotime($row->end)); ?></td>
-        <td><?php echo $row->coworker->companyname . " " . $row->coworker->firstname . " " . $row->coworker->lastname; ?><br /><a href="<?= $this->Url->build(["controller" => "coworkers", "action" => "profile",  $row->coworker->id]); ?>">View Profile</a></td>
-        <td><?php echo money_format('%i', $row->amount_host); ?></td>
-        <td><?php echo money_format('%i', $row->vat_host); ?></td>
+        <td><?= $count++ ?></td>
+        <td><?= date("d.m.Y", strtotime($row->dt_inserted)); ?></td>
+        <td><?= date("d.m.Y", strtotime($row->begin)); ?></td>
+        <td><?= date("d.m.Y", strtotime($row->end)); ?></td>
+        <td style="width:50%"><a href="<?= $this->Url->build(["controller" => "coworkers", "action" => "profile",  $row->coworker->id]); ?>">Profile</a> <?= $row->coworker->companyname . " | " . $row->coworker->firstname . " " . $row->coworker->lastname; ?></td>
+        <td><span style="white-space:nowrap;"><?= money_format('%i', $row->amount_host) ?> EUR</span></td>
+        <td><span style="white-space:nowrap;"><?= money_format('%i', $row->vat_host); ?> EUR</span></td>
         <?php $subtotal = $row->amount_host + $row->vat_host; // todo: sum??? sum financially, not mathematically ?>
-        <td><?php $total += $subtotal; echo money_format('%i', $subtotal); ?></td>
+        <td><span style="white-space:nowrap;"><?php $total += $subtotal; echo money_format('%i', $subtotal); ?> EUR</span></td>
     </tr>
     <?php endforeach; ?>
     <tr>
-        <td colspan="7">
-            
-        </td>
-        <td><h2>
-            <?php echo money_format('%i', $total); ?>
+        <td colspan="8" style="text-align: right;">
+            <h2>SUM
+            <?= money_format('%i', $total); ?> EUR
             </h2>
         </td>
     </tr>
