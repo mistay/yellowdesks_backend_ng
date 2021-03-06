@@ -79,7 +79,6 @@ function markerclick(event) {
 
 $( document ).ready(function() {
     $( ".iframeclose" ).click(function() {
-        console.log( "Handler for .click() called." );
         $(".iframelightbox").hide();
     });
 });
@@ -173,4 +172,4 @@ function initMap() {
         marker.addListener('click', markerclick);
     }
 }
-$.getScript( "https://maps.googleapis.com/maps/api/js?key=AIzaSyD4HecLgzMZ6sK8fYSracEULluXdujR8BU&libraries=places&callback=initMap");
+$.getScript( "https://maps.googleapis.com/maps/api/js?key=" + googlemapsapikey + "&libraries=places&callback=initMap");

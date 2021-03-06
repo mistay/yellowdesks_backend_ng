@@ -1,3 +1,6 @@
+<script>
+    var googlemapsapikey = '<?= $googlemapsapikey ?>';
+</script>
 <?= $this->Html->css('signup.css') ?>
 <?= $this->Html->css('mapmarker.css') ?>
 

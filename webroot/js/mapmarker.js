@@ -92,4 +92,4 @@ function setPosition(lat, lng) {
     $(window).trigger(evt);
 }
 
-$.getScript( "https://maps.googleapis.com/maps/api/js?key=AIzaSyD4HecLgzMZ6sK8fYSracEULluXdujR8BU&libraries=places&callback=initMap");
+$.getScript( "https://maps.googleapis.com/maps/api/js?key=" + googlemapsapikey + "&libraries=places&callback=initMap");

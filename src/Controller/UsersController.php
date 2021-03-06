@@ -6,7 +6,7 @@ use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 use Cake\Mailer\Email;
 use Cake\Routing\Router;
-
+use Cake\Core\Configure;
 
 use Cake\Mailer\Mailer;
 use Cake\Mailer\TransportFactory;
@@ -18,6 +18,8 @@ class UsersController extends AppController
     } 
 
     public function becomeahost() {
+        $this->set("googlemapsapikey", Configure::read('googlemapsapikey'));
+
 
         if ($this -> request -> is('post')) {
             $data = $this -> getRequest() -> getData();
@@ -372,6 +374,8 @@ class UsersController extends AppController
 
         $loggedinuser = $this -> getLoggedInUser();
         $this->set("loggedinuser", $loggedinuser);
+
+        $this->set("googlemapsapikey", Configure::read('googlemapsapikey'));
     }
 
     public function welcome() {

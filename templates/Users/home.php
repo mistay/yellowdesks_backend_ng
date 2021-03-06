@@ -22,6 +22,10 @@ $this->disableAutoLayout();
         <?php //google maps renders map objects (streets, markers, ..) much bigger ?>
         <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 
+        <script>
+            var googlemapsapikey = '<?= $googlemapsapikey ?>';
+        </script>
+
         <script type="text/javascript">
             var baseurl = "<?= $this->Url->build("/", []) ?>";
         </script>
